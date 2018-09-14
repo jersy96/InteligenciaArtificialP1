@@ -60,7 +60,9 @@ class AStar:
                         f_score[child] = g_score[child] + self.heuristic.estimate(self.distance_finder, child)
 
 class Node:
-    def __init__(self, tag=None, index=None):
+    def __init__(self, matrix, tags, tag=None, index=None):
+        self.matrix = matrix
+        self.tags = tags
         if tag:
             self.tag = tag
             self.index = self.tags.index(tag)
@@ -68,8 +70,6 @@ class Node:
             self.tag = self.tags[index]
             self.index = index
         else: raise ValueError('tag not set')
-        self.matrix = None
-        self.tags = None
 
     def __eq__(self, other):
         return self.tag == other.tag
@@ -86,7 +86,7 @@ class Node:
         for i in range(len(nodes_weights)):
             weight = nodes_weights[i]
             if weight != 0:
-                new_node = Node(index=i)
+                new_node = Node(self.matrix, self.tags, index=i)
                 children.append(new_node)
         return children
     
