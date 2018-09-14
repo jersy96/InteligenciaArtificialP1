@@ -14,12 +14,12 @@ class AStar:
         self.distance_finder = distance_finder
         self.heuristic = heuristic
         
-    def __get_new_current(self, open_set, f_score):
+    def __get_new_current(self, open_set, start_to_goal_through_node):
         lowest = float('inf')
         new_current = None
         for node in open_set:
-            if f_score[node] < lowest:
-                lowest = f_score[node]
+            if start_to_goal_through_node[node] < lowest:
+                lowest = start_to_goal_through_node[node]
                 new_current = node
         return new_current
 
@@ -38,12 +38,12 @@ class AStar:
         # open_set: the set of currently discovered nodes that are not evaluated yet
         open_set = [self.start]
         parents = {}
-        g_score = {}
-        g_score[self.start] = 0
-        f_score = {}
-        f_score[self.start] = self.heuristic.estimate(self.start)
+        start_to_node = {}
+        start_to_node[self.start] = 0
+        start_to_goal_through_node = {}
+        start_to_goal_through_node[self.start] = self.heuristic.estimate(self.start)
         while open_set:
-            current = self.__get_new_current(open_set, f_score)
+            current = self.__get_new_current(open_set, start_to_goal_through_node)
             if current == goal:
                 return self.__reconstruct_path(parents, current)
             open_set.remove(current)
@@ -51,13 +51,13 @@ class AStar:
             children = current.children()
             for child in children:
                 if not child in closed_set:
-                    temp_score = g_score[current] + self.distance_finder.distance(current, child)
+                    temp_score = start_to_node[current] + self.distance_finder.distance(current, child)
                     new_node = not child in open_set
                     if new_node: open_set.append(child)
-                    if new_node or temp_score < g_score[child]:
+                    if new_node or temp_score < start_to_node[child]:
                         parents[child] = current
-                        g_score[child] = temp_score
-                        f_score[child] = g_score[child] + self.heuristic.estimate(child)
+                        start_to_node[child] = temp_score
+                        start_to_goal_through_node[child] = start_to_node[child] + self.heuristic.estimate(child)
 
 class Graph:
     def __init__(self, matrix, tags):
