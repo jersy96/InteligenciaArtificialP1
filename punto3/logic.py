@@ -6,6 +6,7 @@ def file_to_matrix(path):
     return m
 
 matrix = file_to_matrix('../enunciado/adyacencia_grafo_dirigido_con_pesos.csv')
+tags = 'ABCDEFGHIJKL'
 
 class AStar:
     def __init__(self, start, distance_finder, heuristic):
