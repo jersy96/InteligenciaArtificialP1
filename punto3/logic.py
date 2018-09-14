@@ -102,3 +102,10 @@ class Node:
                 new_node = Node(self.matrix, self.tags, index=i)
                 children.append(new_node)
         return children
+
+class Heuristic:
+    def __init__(self, desired_state=None):
+        self.desired_state = desired_state
+
+    def estimate(self, node):
+        return 1
