@@ -59,6 +59,19 @@ class AStar:
                         g_score[child] = temp_score
                         f_score[child] = g_score[child] + self.heuristic.estimate(self.distance_finder, child)
 
+class Graph:
+    def __init__(self, matrix, tags):
+        self.matrix = matrix
+        self.tags = tags
+        if len(tags) != len(matrix):
+            raise ValueError('La cantidad de tags deben ser igual a la cantidad de nodos en la matriz')
+
+    def distance(self, a, b):
+        return self.matrix[a.index][b.index]
+    
+    def get_node_by_tag(self, tag):
+        return Node(self.matrix, self.tags, tag=tag)
+
 class Node:
     def __init__(self, matrix, tags, tag=None, index=None):
         self.matrix = matrix
