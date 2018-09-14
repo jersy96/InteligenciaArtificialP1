@@ -5,6 +5,8 @@ def file_to_matrix(path):
     m = [[int(num) for num in line.split(',')] for line in f ]
     return m
 
+matrix = file_to_matrix('../enunciado/adyacencia_grafo_dirigido_con_pesos.csv')
+
 class AStar:
     def __init__(self, start, distance_finder, heuristic):
         self.start = start
@@ -57,7 +59,6 @@ class AStar:
                         f_score[child] = g_score[child] + self.heuristic.estimate(self.distance_finder, child)
 
 class Node:
-    matrix = file_to_matrix('../enunciado/adyacencia_grafo_dirigido_con_pesos.csv')
     tags = 'ABCDEFGHIJKL'
 
     def __init__(self, tag=None, index=None):
@@ -87,3 +88,4 @@ class Node:
                 new_node = Node(index=i)
                 children.append(new_node)
         return children
+    
