@@ -59,8 +59,6 @@ class AStar:
                         f_score[child] = g_score[child] + self.heuristic.estimate(self.distance_finder, child)
 
 class Node:
-    tags = 'ABCDEFGHIJKL'
-
     def __init__(self, tag=None, index=None):
         if tag:
             self.tag = tag
@@ -70,6 +68,7 @@ class Node:
             self.index = index
         else: raise ValueError('tag not set')
         self.matrix = None
+        self.tags = None
 
     def __eq__(self, other):
         return self.tag == other.tag
