@@ -69,6 +69,7 @@ class Node:
             self.tag = self.tags[index]
             self.index = index
         else: raise ValueError('tag not set')
+        self.matrix = None
 
     def __eq__(self, other):
         return self.tag == other.tag
