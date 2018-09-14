@@ -41,7 +41,7 @@ class AStar:
         g_score = {}
         g_score[self.start] = 0
         f_score = {}
-        f_score[self.start] = self.heuristic.estimate(self.distance_finder, self.start)
+        f_score[self.start] = self.heuristic.estimate(self.start)
         while open_set:
             current = self.__get_new_current(open_set, f_score)
             if current == goal:
@@ -57,7 +57,7 @@ class AStar:
                     if new_node or temp_score < g_score[child]:
                         parents[child] = current
                         g_score[child] = temp_score
-                        f_score[child] = g_score[child] + self.heuristic.estimate(self.distance_finder, child)
+                        f_score[child] = g_score[child] + self.heuristic.estimate(child)
 
 class Graph:
     def __init__(self, matrix, tags):
@@ -102,4 +102,3 @@ class Node:
                 new_node = Node(self.matrix, self.tags, index=i)
                 children.append(new_node)
         return children
-    
